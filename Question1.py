@@ -21,6 +21,9 @@ def currency_format(n):
     return s    
 
 def find_decimal_idx(n):
+    """
+    To find the index of the decimal point 
+    """
     gl = list(n)
     count = 0
     for i in gl:
@@ -31,6 +34,9 @@ def find_decimal_idx(n):
 
 
 def get_comma(n):
+    """
+    To find the initial comma inserted location index
+    """
     gl = list(n)
     count = 0
     for i in gl:
@@ -41,53 +47,53 @@ def get_comma(n):
 
 
 def listToString(s):
+    """ To convert list to string"""
    
     str1 = ""
     return (str1.join(s))            
 
 def convert_to_Indian_currency_notation(n):
+    """ The main function that converts the values to Indian currency notation"""
     formatted = currency_format(n)
-    # print("formateed",formatted)
 
     # * get values before decimal
     before_decimal = formatted[:find_decimal_idx(formatted)]
 
-    # * after decimal
+    # * get values after decimal
     after_decimal = formatted[find_decimal_idx(formatted):]
-    # print(after_decimal)
+
+
     if len(before_decimal)>3:
-        # *inserting 3 elements wala comma
+        # *inserting before last 3 elements
         before_decimal_list = list(before_decimal)
         after_decimal_list = list(after_decimal)
         if len(after_decimal_list) > 3:
             raise "Paise value can't be more than 2 decimal digits "
-        # print("after decimal list" , after_decimal_list)
+
         before_decimal_list.insert(-3,",")
 
-        # * after 3 elements wali setting
+        # * Placing commas to numbers after placing comma before last 3 elements
         total_no_of_commas_required = divmod((len(before_decimal)-3),2)
         no_of_commas_required_post_3 = sum(total_no_of_commas_required) - 1
     
 
         no_of_elements_post3 = before_decimal_list[:get_comma(before_decimal_list)]
-        # print(no_of_elements_post3)
+
         if len(no_of_elements_post3) >2:
-            # print("before_decimal_list:    ",before_decimal_list)
+
             idex = -4
             for i in range(no_of_commas_required_post_3) :
                 idex-=2
                 before_decimal_list.insert(idex,",")
                 idex-=1
    
-        #* append decimals 
+        #* joining(extending) 2 lists 
         before_decimal_list.extend(after_decimal_list)
-        # * list to str
+        # * Converting list to string
         print("₹",listToString(before_decimal_list))
         
                     
         
-        
-       
        
     else:
         final_op = "{:,.2f}".format(n)  
@@ -95,28 +101,16 @@ def convert_to_Indian_currency_notation(n):
         
 
 
-    
-    
-
-    
-
-
-    
-    
-    
-
-
-
 
 if __name__ == "__main__":
-
+# 
     while True:
-        print("\n\n\n\n   0 to exit \n 1 to go to program \n\n\n\n")
-        ip = int(input("Enter Option   "))
-        if ip == 0:
-            exit()
-        elif ip == 1:
-            convert_to_Indian_currency_notation(float(input("Enter value   ")))
+        print("\n\n\n\n  This program converts value to Indian currency notation  \n\n\n\n")
+        convert_to_Indian_currency_notation(float(input("Enter value   ")))
+
+        print("\n\n  To exit the program Press Ctrl + C ")
+
+
 
 
 
